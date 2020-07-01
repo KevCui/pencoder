@@ -2,10 +2,24 @@
 
 > Yet another powerful **p**ayload **encoder** powered by Bash
 
+## Table of Contents
+
+- [Features](#features)
+- [Supported encoders](#supported-encoders)
+- [Download](#download)
+- [Usage](#usage)
+- [Examples](#examples)
+  - [Encoding with one encoder](#encoding-with-one-encoder)
+  - [Decoding with one dencoder](#decoding-with-one-dencoder)
+  - [Encoding with multiple encoders](#encoding-with-multiple-encoders)
+  - [Decoding with multiple dencoders](#decoding-with-multiple-dencoders)
+  - [Running the same encoder multiple times](#running-the-same-encoder-multiple-times)
+  - [Working with pipes](#working-with-pipes)
+
 ## Features
 
 - Single Bash script
-- No 3rd party dependencies
+- No 3rd party dependency
 - Support different kinds of encoders/decoders
 - Apply multiple encodings at the same time
 
