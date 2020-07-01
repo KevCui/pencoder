@@ -1,20 +1,22 @@
 #!/usr/bin/env bash
 #
-# Payload encoder/decoder in Bash
+# Powerful payload encoder powered by Bash
 #
 #/ Usage:
 #/   ./pencoder.sh [encoder1] [encoder2]... <string>
 #/
 #/ Options:
 #/   string           input string
-#/   encoder          "\033[32mb32en\033[0m": base32 encode
-#/                    "\033[32mb32de\033[0m": base32 decode
-#/                    "\033[32mb64en\033[0m": base64 encode
-#/                    "\033[32mb64de\033[0m": base64 decode
-#/                    "\033[32mhexen\033[0m": hex encode
-#/                    "\033[32mhexde\033[0m": hex decode
-#/                    "\033[32murlen\033[0m": URL encode
-#/                    "\033[32murlde\033[0m": URL decode
+#/   encoder          \033[32mb32en\033[0m: base32 encode
+#/                    \033[32mb32de\033[0m: base32 decode
+#/                    \033[32mb64en\033[0m: base64 encode
+#/                    \033[32mb64de\033[0m: base64 decode
+#/                    \033[32mhexen\033[0m: hex encode
+#/                    \033[32mhexde\033[0m: hex decode
+#/                    \033[32murlen\033[0m: URL encode
+#/                    \033[32murlde\033[0m: URL decode
+#/                    \033[32municodeen\033[0m: Unicode \\u-escaped numbers encode
+#/                    \033[32municodede\033[0m: Unicode \\u-escaped numbers decode
 #/                    support multiple encoders: encoder1 encoder2...
 #/   -h | --help      display this help message
 
@@ -88,7 +90,7 @@ f_b64de() {
 
 f_hexen() {
     # $*: input string
-    echo -n "$*" | $_XXD -p
+    echo -n "$*" | $_XXD -p | sed -E ':a;N;s/\n//;ba'
 }
 
 f_hexde() {
@@ -98,7 +100,7 @@ f_hexde() {
 
 f_urlen() {
     # $1: input string
-    # code from https://stackoverflow.com/a/10660730/8272771
+    # code from https://stackoverflow.com/a/10660730
     local string="${1}"
     local strlen=${#string}
     local encoded pos c o
@@ -119,12 +121,27 @@ f_urlde() {
     printf '%b' "${1//%/\\x}"
 }
 
+f_unicodeen() {
+    # $1: input string
+    # code from https://stackoverflow.com/a/51309827
+    local o=""
+    while read -r -n 1 u; do
+        [[ -n "$u" ]] && o+=$(printf '\\u%04x' "'$u")
+    done <<< "$1"
+    echo "$o"
+}
+
+f_unicodede() {
+    # $1: input string
+    echo -e "$1"
+}
+
 main() {
     check_var "$@"
     set_var "$@"
     set_command
 
-    local list=(b32en b32de b64en b64de hexen hexde urlen urlde)
+    local list=(b32en b32de b64en b64de hexen hexde urlen urlde unicodeen unicodede)
     local str="$_INPUT_STR"
 
     for i in "${_ENCODE_LIST[@]}"; do
