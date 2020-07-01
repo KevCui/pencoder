@@ -69,33 +69,33 @@ command_not_found() {
 }
 
 f_b32en() {
-    # $*: input string
-    echo -n "$*" | ${_BASE32}
+    # $1: input string
+    echo -n "$1" | ${_BASE32}
 }
 
 f_b32de() {
-    # $*: input string
-    echo -n "$*" | $_BASE32 -d
+    # $1: input string
+    echo -n "$1" | $_BASE32 -d
 }
 
 f_b64en() {
-    # $*: input string
-    echo -n "$*" | ${_BASE64}
+    # $1: input string
+    echo -n "$1" | ${_BASE64}
 }
 
 f_b64de() {
-    # $*: input string
-    echo -n "$*" | $_BASE64 -d
+    # $1: input string
+    echo -n "$1" | $_BASE64 -d
 }
 
 f_hexen() {
-    # $*: input string
-    echo -n "$*" | $_XXD -p | sed -E ':a;N;s/\n//;ba'
+    # $1: input string
+    echo -n "$1" | $_XXD -p | sed -E ':a;N;s/\n//;ba'
 }
 
 f_hexde() {
-    # $*: input string
-    echo -n "$*" | $_XXD -r -p
+    # $1: input string
+    echo -n "$1" | $_XXD -r -p
 }
 
 f_urlen() {
