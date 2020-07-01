@@ -125,6 +125,7 @@ f_unicodeen() {
     # $1: input string
     # code from https://stackoverflow.com/a/51309827
     local o=""
+    IFS=''
     while read -r -n 1 u; do
         [[ -n "$u" ]] && o+=$(printf '\\u%04x' "'$u")
     done <<< "$1"
