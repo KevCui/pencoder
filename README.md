@@ -100,6 +100,6 @@ WlVoc05nPT0=
 ### Working with pipes
 
 ```bash
-~$ echo "super mario" | xargs ./pencoder.sh urlen b64en hexen
+~$ echo -n "super mario" | xargs -0 ./pencoder.sh urlen b64en hexen
 633356775a58496c4d6a427459584a7062773d3d
 ```
