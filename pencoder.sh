@@ -3,7 +3,7 @@
 # Powerful payload encoder powered by Bash
 #
 #/ Usage:
-#/   ./pencoder.sh [encoder1] [encoder2]... <string>
+#/   ./pencoder.sh [encoder1] [encoder2] ... <string>
 #/
 #/ Options:
 #/   string           input string
