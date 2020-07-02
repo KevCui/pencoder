@@ -73,7 +73,7 @@ command_not_found() {
 
 f_b32en() {
     # $1: input string
-    echo -n "$1" | ${_BASE32}
+    echo -n "$1" | ${_BASE32} -w 0
 }
 
 f_b32de() {
@@ -83,7 +83,7 @@ f_b32de() {
 
 f_b64en() {
     # $1: input string
-    echo -n "$1" | ${_BASE64}
+    echo -n "$1" | ${_BASE64} -w 0
 }
 
 f_b64de() {
