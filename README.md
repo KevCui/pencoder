@@ -27,9 +27,10 @@
 
 - Base32 encode/decode
 - Base64 encode/decode
+- Hex encode using \x delimiter
 - Hex encode/decode
 - URL encode/decode
-- Unicode \u-escaped numbers encode/decode
+- Unicode encode using \u delimiter /decode
 - HTML encode/decode
 
 ## Download
@@ -52,11 +53,12 @@ Options:
                    b64en: base64 encode
                    b64de: base64 decode
                    hexen: hex encode
+                   xhexen: hex encode using \x delimiter
                    hexde: hex decode
                    urlen: URL encode
                    urlde: URL decode
-                   unicodeen: Unicode \u-escaped numbers encode
-                   unicodede: Unicode \u-escaped numbers decode
+                   unicodeen: Unicode encode using \u delimiter
+                   unicodede: Unicode decode
                    htmlen: HTML encode
                    htmlde: HTML decode
                    support multiple encoders: encoder1 encoder2...

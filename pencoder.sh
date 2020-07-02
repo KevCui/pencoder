@@ -12,11 +12,12 @@
 #/                    \033[32mb64en\033[0m: base64 encode
 #/                    \033[32mb64de\033[0m: base64 decode
 #/                    \033[32mhexen\033[0m: hex encode
+#/                    \033[32mxhexen\033[0m: hex encode using \\x delimiter
 #/                    \033[32mhexde\033[0m: hex decode
 #/                    \033[32murlen\033[0m: URL encode
 #/                    \033[32murlde\033[0m: URL decode
-#/                    \033[32municodeen\033[0m: Unicode \\u-escaped numbers encode
-#/                    \033[32municodede\033[0m: Unicode \\u-escaped numbers decode
+#/                    \033[32municodeen\033[0m: Unicode encode using \\u delimiter
+#/                    \033[32municodede\033[0m: Unicode decode
 #/                    \033[32mhtmlen\033[0m: HTML encode
 #/                    \033[32mhtmlde\033[0m: HTML decode
 #/                    support multiple encoders: encoder1 encoder2...
@@ -95,9 +96,14 @@ f_hexen() {
     echo -n "$1" | $_XXD -p | sed -E ':a;N;s/\n//;ba'
 }
 
+f_xhexen() {
+    # $1: input string
+    echo -n "$1" | $_XXD -p | fold -2 | awk '{printf "\\x%s", $1}'
+}
+
 f_hexde() {
     # $1: input string
-    echo -n "$1" | $_XXD -r -p
+    echo -n "$1" | sed -E 's/\\x//g' | $_XXD -r -p
 }
 
 f_urlen() {
@@ -354,7 +360,7 @@ main() {
     set_var "$@"
     set_command
 
-    local list=(b32en b32de b64en b64de hexen hexde urlen urlde unicodeen unicodede htmlen htmlde)
+    local list=(b32en b32de b64en b64de hexen xhexen hexde urlen urlde unicodeen unicodede htmlen htmlde)
     local str="$_INPUT_STR"
 
     for i in "${_ENCODE_LIST[@]}"; do
