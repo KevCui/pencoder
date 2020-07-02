@@ -17,7 +17,7 @@
 #/                    \033[32murlde\033[0m: URL decode
 #/                    \033[32municodeen\033[0m: Unicode \\u-escaped numbers encode
 #/                    \033[32municodede\033[0m: Unicode \\u-escaped numbers decode
-#/                    \033[32mhtmen\033[0m: HTML encode
+#/                    \033[32mhtmlen\033[0m: HTML encode
 #/                    \033[32mhtmlde\033[0m: HTML decode
 #/                    support multiple encoders: encoder1 encoder2...
 #/   -h | --help      display this help message

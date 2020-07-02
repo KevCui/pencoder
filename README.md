@@ -57,6 +57,8 @@ Options:
                    urlde: URL decode
                    unicodeen: Unicode \u-escaped numbers encode
                    unicodede: Unicode \u-escaped numbers decode
+                   htmlen: HTML encode
+                   htmlde: HTML decode
                    support multiple encoders: encoder1 encoder2...
   -h | --help      display this help message
 ```
