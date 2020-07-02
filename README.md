@@ -30,6 +30,7 @@
 - Hex encode/decode
 - URL encode/decode
 - Unicode \u-escaped numbers encode/decode
+- HTML encode/decode
 
 ## Download
 

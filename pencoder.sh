@@ -17,6 +17,8 @@
 #/                    \033[32murlde\033[0m: URL decode
 #/                    \033[32municodeen\033[0m: Unicode \\u-escaped numbers encode
 #/                    \033[32municodede\033[0m: Unicode \\u-escaped numbers decode
+#/                    \033[32mhtmen\033[0m: HTML encode
+#/                    \033[32mhtmlde\033[0m: HTML decode
 #/                    support multiple encoders: encoder1 encoder2...
 #/   -h | --help      display this help message
 
@@ -137,12 +139,222 @@ f_unicodede() {
     echo -e "$1"
 }
 
+f_htmlen() {
+    # $1: input string
+    sed -E s:\&:\\\&amp\;:g <<< "$1" \
+        | sed -E s:\":\\\&quot\;:g  \
+        | sed -E s:\':\\\&apos\;:g \
+        | sed -E s:\<:\\\&lt\;:g \
+        | sed -E s:\>:\\\&gt\;:g \
+        | sed -E s:\ :\\\&nbsp\;:g \
+        | sed -E s:¡:\\\&iexcl\;:g \
+        | sed -E s:¢:\\\&cent\;:g \
+        | sed -E s:£:\\\&pound\;:g \
+        | sed -E s:¤:\\\&curren\;:g \
+        | sed -E s:¥:\\\&yen\;:g \
+        | sed -E s:¦:\\\&brvbar\;:g \
+        | sed -E s:§:\\\&sect\;:g \
+        | sed -E s:¨:\\\&uml\;:g \
+        | sed -E s:©:\\\&copy\;:g \
+        | sed -E s:ª:\\\&ordf\;:g \
+        | sed -E s:«:\\\&laquo\;:g \
+        | sed -E s:¬:\\\&not\;:g \
+        | sed -E s:­:\\\&shy\;:g \
+        | sed -E s:®:\\\&reg\;:g \
+        | sed -E s:¯:\\\&macr\;:g \
+        | sed -E s:°:\\\&deg\;:g \
+        | sed -E s:±:\\\&plusmn\;:g \
+        | sed -E s:²:\\\&sup2\;:g \
+        | sed -E s:³:\\\&sup3\;:g \
+        | sed -E s:´:\\\&acute\;:g \
+        | sed -E s:µ:\\\&micro\;:g \
+        | sed -E s:¶:\\\&para\;:g \
+        | sed -E s:·:\\\&middot\;:g \
+        | sed -E s:¸:\\\&cedil\;:g \
+        | sed -E s:¹:\\\&sup1\;:g \
+        | sed -E s:º:\\\&ordm\;:g \
+        | sed -E s:»:\\\&raquo\;:g \
+        | sed -E s:¼:\\\&frac14\;:g \
+        | sed -E s:½:\\\&frac12\;:g \
+        | sed -E s:¾:\\\&frac34\;:g \
+        | sed -E s:¿:\\\&iquest\;:g \
+        | sed -E s:×:\\\&times\;:g \
+        | sed -E s:÷:\\\&divide\;:g \
+        | sed -E s:À:\\\&Agrave\;:g \
+        | sed -E s:Á:\\\&Aacute\;:g \
+        | sed -E s:Â:\\\&Acirc\;:g \
+        | sed -E s:Ã:\\\&Atilde\;:g \
+        | sed -E s:Ä:\\\&Auml\;:g \
+        | sed -E s:Å:\\\&Aring\;:g \
+        | sed -E s:Æ:\\\&AElig\;:g \
+        | sed -E s:Ç:\\\&Ccedil\;:g \
+        | sed -E s:È:\\\&Egrave\;:g \
+        | sed -E s:É:\\\&Eacute\;:g \
+        | sed -E s:Ê:\\\&Ecirc\;:g \
+        | sed -E s:Ë:\\\&Euml\;:g \
+        | sed -E s:Ì:\\\&Igrave\;:g \
+        | sed -E s:Í:\\\&Iacute\;:g \
+        | sed -E s:Î:\\\&Icirc\;:g \
+        | sed -E s:Ï:\\\&Iuml\;:g \
+        | sed -E s:Ð:\\\&ETH\;:g \
+        | sed -E s:Ñ:\\\&Ntilde\;:g \
+        | sed -E s:Ò:\\\&Ograve\;:g \
+        | sed -E s:Ó:\\\&Oacute\;:g \
+        | sed -E s:Ô:\\\&Ocirc\;:g \
+        | sed -E s:Õ:\\\&Otilde\;:g \
+        | sed -E s:Ö:\\\&Ouml\;:g \
+        | sed -E s:Ø:\\\&Oslash\;:g \
+        | sed -E s:Ù:\\\&Ugrave\;:g \
+        | sed -E s:Ú:\\\&Uacute\;:g \
+        | sed -E s:Û:\\\&Ucirc\;:g \
+        | sed -E s:Ü:\\\&Uuml\;:g \
+        | sed -E s:Ý:\\\&Yacute\;:g \
+        | sed -E s:Þ:\\\&THORN\;:g \
+        | sed -E s:ß:\\\&szlig\;:g \
+        | sed -E s:à:\\\&agrave\;:g \
+        | sed -E s:á:\\\&aacute\;:g \
+        | sed -E s:â:\\\&acirc\;:g \
+        | sed -E s:ã:\\\&atilde\;:g \
+        | sed -E s:ä:\\\&auml\;:g \
+        | sed -E s:å:\\\&aring\;:g \
+        | sed -E s:æ:\\\&aelig\;:g \
+        | sed -E s:ç:\\\&ccedil\;:g \
+        | sed -E s:è:\\\&egrave\;:g \
+        | sed -E s:é:\\\&eacute\;:g \
+        | sed -E s:ê:\\\&ecirc\;:g \
+        | sed -E s:ë:\\\&euml\;:g \
+        | sed -E s:ì:\\\&igrave\;:g \
+        | sed -E s:í:\\\&iacute\;:g \
+        | sed -E s:î:\\\&icirc\;:g \
+        | sed -E s:ï:\\\&iuml\;:g \
+        | sed -E s:ð:\\\&eth\;:g \
+        | sed -E s:ñ:\\\&ntilde\;:g \
+        | sed -E s:ò:\\\&ograve\;:g \
+        | sed -E s:ó:\\\&oacute\;:g \
+        | sed -E s:ô:\\\&ocirc\;:g \
+        | sed -E s:õ:\\\&otilde\;:g \
+        | sed -E s:ö:\\\&ouml\;:g \
+        | sed -E s:ø:\\\&oslash\;:g \
+        | sed -E s:ù:\\\&ugrave\;:g \
+        | sed -E s:ú:\\\&uacute\;:g \
+        | sed -E s:û:\\\&ucirc\;:g \
+        | sed -E s:ü:\\\&uuml\;:g \
+        | sed -E s:ý:\\\&yacute\;:g \
+        | sed -E s:þ:\\\&thorn\;:g \
+        | sed -E s:ÿ:\\\&yuml\;:g
+}
+
+f_htmlde() {
+    # $1: input string
+    sed -E s:\&quot\;:\":g <<< "$1" \
+        | sed -E s:\&apos\;:\':g \
+        | sed -E s:\&lt\;:\<:g \
+        | sed -E s:\&gt\;:\>:g \
+        | sed -E s:\&nbsp\;:\ :g \
+        | sed -E s:\&iexcl\;:¡:g \
+        | sed -E s:\&cent\;:¢:g \
+        | sed -E s:\&pound\;:£:g \
+        | sed -E s:\&curren\;:¤:g \
+        | sed -E s:\&yen\;:¥:g \
+        | sed -E s:\&brvbar\;:¦:g \
+        | sed -E s:\&sect\;:§:g \
+        | sed -E s:\&uml\;:¨:g \
+        | sed -E s:\&copy\;:©:g \
+        | sed -E s:\&ordf\;:ª:g \
+        | sed -E s:\&laquo\;:«:g \
+        | sed -E s:\&not\;:¬:g \
+        | sed -E s:\&shy\;:­:g \
+        | sed -E s:\&reg\;:®:g \
+        | sed -E s:\&macr\;:¯:g \
+        | sed -E s:\&deg\;:°:g \
+        | sed -E s:\&plusmn\;:±:g \
+        | sed -E s:\&sup2\;:²:g \
+        | sed -E s:\&sup3\;:³:g \
+        | sed -E s:\&acute\;:´:g \
+        | sed -E s:\&micro\;:µ:g \
+        | sed -E s:\&para\;:¶:g \
+        | sed -E s:\&middot\;:·:g \
+        | sed -E s:\&cedil\;:¸:g \
+        | sed -E s:\&sup1\;:¹:g \
+        | sed -E s:\&ordm\;:º:g \
+        | sed -E s:\&raquo\;:»:g \
+        | sed -E s:\&frac14\;:¼:g \
+        | sed -E s:\&frac12\;:½:g \
+        | sed -E s:\&frac34\;:¾:g \
+        | sed -E s:\&iquest\;:¿:g \
+        | sed -E s:\&times\;:×:g \
+        | sed -E s:\&divide\;:÷:g \
+        | sed -E s:\&Agrave\;:À:g \
+        | sed -E s:\&Aacute\;:Á:g \
+        | sed -E s:\&Acirc\;:Â:g \
+        | sed -E s:\&Atilde\;:Ã:g \
+        | sed -E s:\&Auml\;:Ä:g \
+        | sed -E s:\&Aring\;:Å:g \
+        | sed -E s:\&AElig\;:Æ:g \
+        | sed -E s:\&Ccedil\;:Ç:g \
+        | sed -E s:\&Egrave\;:È:g \
+        | sed -E s:\&Eacute\;:É:g \
+        | sed -E s:\&Ecirc\;:Ê:g \
+        | sed -E s:\&Euml\;:Ë:g \
+        | sed -E s:\&Igrave\;:Ì:g \
+        | sed -E s:\&Iacute\;:Í:g \
+        | sed -E s:\&Icirc\;:Î:g \
+        | sed -E s:\&Iuml\;:Ï:g \
+        | sed -E s:\&ETH\;:Ð:g \
+        | sed -E s:\&Ntilde\;:Ñ:g \
+        | sed -E s:\&Ograve\;:Ò:g \
+        | sed -E s:\&Oacute\;:Ó:g \
+        | sed -E s:\&Ocirc\;:Ô:g \
+        | sed -E s:\&Otilde\;:Õ:g \
+        | sed -E s:\&Ouml\;:Ö:g \
+        | sed -E s:\&Oslash\;:Ø:g \
+        | sed -E s:\&Ugrave\;:Ù:g \
+        | sed -E s:\&Uacute\;:Ú:g \
+        | sed -E s:\&Ucirc\;:Û:g \
+        | sed -E s:\&Uuml\;:Ü:g \
+        | sed -E s:\&Yacute\;:Ý:g \
+        | sed -E s:\&THORN\;:Þ:g \
+        | sed -E s:\&szlig\;:ß:g \
+        | sed -E s:\&agrave\;:à:g \
+        | sed -E s:\&aacute\;:á:g \
+        | sed -E s:\&acirc\;:â:g \
+        | sed -E s:\&atilde\;:ã:g \
+        | sed -E s:\&auml\;:ä:g \
+        | sed -E s:\&aring\;:å:g \
+        | sed -E s:\&aelig\;:æ:g \
+        | sed -E s:\&ccedil\;:ç:g \
+        | sed -E s:\&egrave\;:è:g \
+        | sed -E s:\&eacute\;:é:g \
+        | sed -E s:\&ecirc\;:ê:g \
+        | sed -E s:\&euml\;:ë:g \
+        | sed -E s:\&igrave\;:ì:g \
+        | sed -E s:\&iacute\;:í:g \
+        | sed -E s:\&icirc\;:î:g \
+        | sed -E s:\&iuml\;:ï:g \
+        | sed -E s:\&eth\;:ð:g \
+        | sed -E s:\&ntilde\;:ñ:g \
+        | sed -E s:\&ograve\;:ò:g \
+        | sed -E s:\&oacute\;:ó:g \
+        | sed -E s:\&ocirc\;:ô:g \
+        | sed -E s:\&otilde\;:õ:g \
+        | sed -E s:\&ouml\;:ö:g \
+        | sed -E s:\&oslash\;:ø:g \
+        | sed -E s:\&ugrave\;:ù:g \
+        | sed -E s:\&uacute\;:ú:g \
+        | sed -E s:\&ucirc\;:û:g \
+        | sed -E s:\&uuml\;:ü:g \
+        | sed -E s:\&yacute\;:ý:g \
+        | sed -E s:\&thorn\;:þ:g \
+        | sed -E s:\&yuml\;:ÿ:g \
+        | sed -E s:\&amp\;:\\\&:g
+}
+
 main() {
     check_var "$@"
     set_var "$@"
     set_command
 
-    local list=(b32en b32de b64en b64de hexen hexde urlen urlde unicodeen unicodede)
+    local list=(b32en b32de b64en b64de hexen hexde urlen urlde unicodeen unicodede htmlen htmlde)
     local str="$_INPUT_STR"
 
     for i in "${_ENCODE_LIST[@]}"; do
