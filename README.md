@@ -14,14 +14,14 @@
   - [Encoding with multiple encoders](#encoding-with-multiple-encoders)
   - [Decoding with multiple dencoders](#decoding-with-multiple-dencoders)
   - [Running the same encoder multiple times](#running-the-same-encoder-multiple-times)
-  - [Working with pipes](#working-with-pipes)
+  - [Working with pipe](#working-with-pipe)
 
 ## Features
 
 - Single Bash script
 - No 3rd party dependency
 - Support different kinds of encoders/decoders
-- Apply multiple encodings at the same time
+- Apply multiple encodings at once as a chain
 
 ## Supported encoders
 
@@ -97,9 +97,9 @@ crazy encoding
 WlVoc05nPT0=
 ```
 
-### Working with pipes
+### Working with pipe
 
 ```bash
-~$ echo -n "super mario" | xargs -0 ./pencoder.sh urlen b64en hexen
+~$ echo "super mario" | xargs -0 ./pencoder.sh urlen b64en hexen
 633356775a58496c4d6a427459584a7062773d3d
 ```

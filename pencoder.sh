@@ -35,7 +35,7 @@ set_command() {
 
 set_var() {
     _INPUT_LEN="${#@}"
-    _INPUT_STR="${*: -1}"
+    _INPUT_STR="$(echo -n "${*: -1}")"
     _ENCODE_LIST=("${@:1:$_INPUT_LEN-1}")
 }
 
