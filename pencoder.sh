@@ -7,18 +7,18 @@
 #/
 #/ Options:
 #/   string           input string
-#/   encoder          \033[32mb32en\033[0m: base32 encode
-#/                    \033[32mb32de\033[0m: base32 decode
-#/                    \033[32mb64en\033[0m: base64 encode
-#/                    \033[32mb64de\033[0m: base64 decode
-#/                    \033[32mhexen\033[0m: hex encode
-#/                    \033[32mxhexen\033[0m: hex encode using \\x delimiter
-#/                    \033[32mhexde\033[0m: hex decode
-#/                    \033[32murlen\033[0m: URL encode
-#/                    \033[32murlde\033[0m: URL decode
-#/                    \033[32municodeen\033[0m: Unicode encode using \\u delimiter
-#/                    \033[32municodede\033[0m: Unicode decode
-#/                    \033[32mhtmlen\033[0m: HTML encode
+#/   encoder          \033[32mb32\033[0m:    base32 encode
+#/                    \033[32mb32de\033[0m:  base32 decode
+#/                    \033[32mb64\033[0m:    base64 encode
+#/                    \033[32mb64de\033[0m:  base64 decode
+#/                    \033[32mhex\033[0m:    hex encode
+#/                    \033[32mxhex\033[0m:   hex encode using \\x delimiter
+#/                    \033[32mhexde\033[0m:  hex decode
+#/                    \033[32murl\033[0m:    URL encode
+#/                    \033[32murlde\033[0m:  URL decode
+#/                    \033[32muni\033[0m:    Unicode encode using \\u delimiter
+#/                    \033[32munide\033[0m:  Unicode decode
+#/                    \033[32mhtml\033[0m:   HTML encode
 #/                    \033[32mhtmlde\033[0m: HTML decode
 #/                    support multiple encoders: encoder1 encoder2...
 #/   -h | --help      display this help message
@@ -71,7 +71,7 @@ command_not_found() {
     print_error "$1 command not found!"
 }
 
-f_b32en() {
+f_b32() {
     # $1: input string
     echo -n "$1" | ${_BASE32} -w 0
 }
@@ -81,7 +81,7 @@ f_b32de() {
     echo -n "$1" | $_BASE32 -d
 }
 
-f_b64en() {
+f_b64() {
     # $1: input string
     echo -n "$1" | ${_BASE64} -w 0
 }
@@ -91,12 +91,12 @@ f_b64de() {
     echo -n "$1" | $_BASE64 -d
 }
 
-f_hexen() {
+f_hex() {
     # $1: input string
     echo -n "$1" | $_XXD -p | sed -E ':a;N;s/\n//;ba'
 }
 
-f_xhexen() {
+f_xhex() {
     # $1: input string
     echo -n "$1" | $_XXD -p | fold -2 | awk '{printf "\\x%s", $1}'
 }
@@ -106,7 +106,7 @@ f_hexde() {
     echo -n "$1" | sed -E 's/\\x//g' | $_XXD -r -p
 }
 
-f_urlen() {
+f_url() {
     # $1: input string
     # code from https://stackoverflow.com/a/10660730
     local string="${1}"
@@ -129,7 +129,7 @@ f_urlde() {
     printf '%b' "${1//%/\\x}"
 }
 
-f_unicodeen() {
+f_uni() {
     # $1: input string
     # code from https://stackoverflow.com/a/51309827
     local o=""
@@ -140,12 +140,12 @@ f_unicodeen() {
     echo "$o"
 }
 
-f_unicodede() {
+f_unide() {
     # $1: input string
     echo -e "$1"
 }
 
-f_htmlen() {
+f_html() {
     # $1: input string
     sed -E s:\&:\\\&amp\;:g <<< "$1" \
         | sed -E s:\":\\\&quot\;:g  \
@@ -360,7 +360,7 @@ main() {
     set_var "$@"
     set_command
 
-    local list=(b32en b32de b64en b64de hexen xhexen hexde urlen urlde unicodeen unicodede htmlen htmlde)
+    local list=(b32 b32de b64 b64de hex xhex hexde url urlde uni unide html htmlde)
     local str="$_INPUT_STR"
 
     for i in "${_ENCODE_LIST[@]}"; do
