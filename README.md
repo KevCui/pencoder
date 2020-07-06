@@ -32,6 +32,7 @@
 - URL encode/decode
 - Unicode encode using \u delimiter /decode
 - HTML encode/decode
+- Morse encode/decode
 
 ## Download
 
@@ -48,19 +49,22 @@ Usage:
 
 Options:
   string           input string
-  encoder          b32:    base32 encode
-                   b32de:  base32 decode
-                   b64:    base64 encode
-                   b64de:  base64 decode
-                   hex:    hex encode
-                   xhex:   hex encode using \x delimiter
-                   hexde:  hex decode
-                   url:    URL encode
-                   urlde:  URL decode
-                   uni:    Unicode encode using \u delimiter
-                   unide:  Unicode decode
-                   html:   HTML encode
-                   htmlde: HTML decode
+  encoder          b32:     base32 encode
+                   b32de:   base32 decode
+                   b64:     base64 encode
+                   b64de:   base64 decode
+                   hex:     hex encode
+                   xhex:    hex encode using \x delimiter
+                   hexde:   hex decode
+                   url:     URL encode
+                   urlde:   URL decode
+                   uni:     Unicode encode using \u delimiter
+                   unide:   Unicode decode
+                   html:    HTML encode
+                   htmlde:  HTML decode
+                   morse:   Morse encode
+                   morsede: Morse decode
+                   support multiple encoders: encoder1 encoder2...
                    support multiple encoders: encoder1 encoder2...
   -h | --help      display this help message
 ```
@@ -74,11 +78,21 @@ Options:
 dGhpcyBpcyBhIHRlc3Q=
 ```
 
+```bash
+~$ ./pencoder.sh morse sos
+... --- ...
+```
+
 ### Decoding with one decoder
 
 ```bash
 ~$ ./pencoder.sh b64de 'dGhpcyBpcyBhIHRlc3Q='
 this is a test
+```
+
+```bash
+~$ ./pencoder.sh morsede '... --- ...'
+SOS
 ```
 
 ### Encoding with multiple encoders

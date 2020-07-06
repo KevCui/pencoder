@@ -7,19 +7,22 @@
 #/
 #/ Options:
 #/   string           input string
-#/   encoder          \033[32mb32\033[0m:    base32 encode
-#/                    \033[32mb32de\033[0m:  base32 decode
-#/                    \033[32mb64\033[0m:    base64 encode
-#/                    \033[32mb64de\033[0m:  base64 decode
-#/                    \033[32mhex\033[0m:    hex encode
-#/                    \033[32mxhex\033[0m:   hex encode using \\x delimiter
-#/                    \033[32mhexde\033[0m:  hex decode
-#/                    \033[32murl\033[0m:    URL encode
-#/                    \033[32murlde\033[0m:  URL decode
-#/                    \033[32muni\033[0m:    Unicode encode using \\u delimiter
-#/                    \033[32munide\033[0m:  Unicode decode
-#/                    \033[32mhtml\033[0m:   HTML encode
-#/                    \033[32mhtmlde\033[0m: HTML decode
+#/   encoder          \033[32mb32\033[0m:     base32 encode
+#/                    \033[32mb32de\033[0m:   base32 decode
+#/                    \033[32mb64\033[0m:     base64 encode
+#/                    \033[32mb64de\033[0m:   base64 decode
+#/                    \033[32mhex\033[0m:     hex encode
+#/                    \033[32mxhex\033[0m:    hex encode using \\x delimiter
+#/                    \033[32mhexde\033[0m:   hex decode
+#/                    \033[32murl\033[0m:     URL encode
+#/                    \033[32murlde\033[0m:   URL decode
+#/                    \033[32muni\033[0m:     Unicode encode using \\u delimiter
+#/                    \033[32munide\033[0m:   Unicode decode
+#/                    \033[32mhtml\033[0m:    HTML encode
+#/                    \033[32mhtmlde\033[0m:  HTML decode
+#/                    \033[32mmorse\033[0m:   Morse encode
+#/                    \033[32mmorsede\033[0m: Morse decode
+#/                    support multiple encoders: encoder1 encoder2...
 #/                    support multiple encoders: encoder1 encoder2...
 #/   -h | --help      display this help message
 
@@ -355,12 +358,139 @@ f_htmlde() {
         | sed -E s:\&amp\;:\\\&:g
 }
 
+f_morse() {
+    # $1: input string
+    awk '{print toupper($0)}' <<< "$1" \
+        | sed -E s:/:\\\&slash\;:g \
+        | sed -E s:-:\\\&dash\;:g \
+        | sed -E s:\ :/\ :g \
+        | sed -E s:\\\.:.-.-.-\ :g \
+        | sed -E s:\&dash\;:-....-\ :g \
+        | sed -E s:\&slash\;:-..-.\ :g \
+        | sed -E s:,:--..--\ :g \
+        | sed -E s:\\\?:..--..\ :g \
+        | sed -E s:\':.----.\ :g \
+        | sed -E s:\!:-.-.--\ :g \
+        | sed -E s:\\\(:-.--.\ :g \
+        | sed -E s:\\\):-.--.-\ :g \
+        | sed -E s:\&:.-...\ :g \
+        | sed -E s/:/---...\ /g \
+        | sed -E s:\;:-.-.-.\ :g \
+        | sed -E s:=:-...-\ :g \
+        | sed -E s:\\\+:.-.-.\ :g \
+        | sed -E s:_:..--.-\ :g \
+        | sed -E s:\":.-..-.\ :g \
+        | sed -E s:\\\$:...-..-\ :g \
+        | sed -E s:@:.--.-.\ :g \
+        | sed -E s:A:.-\ :g \
+        | sed -E s:B:-...\ :g \
+        | sed -E s:C:-.-.\ :g \
+        | sed -E s:D:-..\ :g \
+        | sed -E s:E:.\ :g \
+        | sed -E s:F:..-.\ :g \
+        | sed -E s:G:--.\ :g \
+        | sed -E s:H:....\ :g \
+        | sed -E s:I:..\ :g \
+        | sed -E s:J:.---\ :g \
+        | sed -E s:K:-.-\ :g \
+        | sed -E s:L:.-..\ :g \
+        | sed -E s:M:--\ :g \
+        | sed -E s:N:-.\ :g \
+        | sed -E s:O:---\ :g \
+        | sed -E s:P:.--.\ :g \
+        | sed -E s:Q:--.-\ :g \
+        | sed -E s:R:.-.\ :g \
+        | sed -E s:S:...\ :g \
+        | sed -E s:T:-\ :g \
+        | sed -E s:U:..-\ :g \
+        | sed -E s:V:...-\ :g \
+        | sed -E s:W:.--\ :g \
+        | sed -E s:X:-..-\ :g \
+        | sed -E s:Y:-.--\ :g \
+        | sed -E s:Z:--..\ :g \
+        | sed -E s:1:.----\ :g \
+        | sed -E s:2:..---\ :g \
+        | sed -E s:3:...--\ :g \
+        | sed -E s:4:....-\ :g \
+        | sed -E s:5:.....\ :g \
+        | sed -E s:6:-....\ :g \
+        | sed -E s:7:--...\ :g \
+        | sed -E s:8:---..\ :g \
+        | sed -E s:9:----.\ :g \
+        | sed -E s:0:-----\ :g \
+        | sed -E s:[^-/\.\ ]::g \
+        | sed -E 's/\ $//'
+}
+
+f_morsede() {
+    # $1: input string
+    sed -E 's/$/ /' <<< "$1" \
+        | sed -E 's/^/ /' \
+        | sed -E 's/ /  /g' \
+        | sed -E 's/ --\.\.-- / , /g' \
+        | sed -E 's/ \.\.--\.\. / \? /g' \
+        | sed -E "s/ \.----\. / ' /g" \
+        | sed -E 's/ -\.-\.-- / \! /g' \
+        | sed -E 's/ -\.--\. / \( /g' \
+        | sed -E 's/ -\.--\.- / \) /g' \
+        | sed -E 's/ \.-\.\.\. / \& /g' \
+        | sed -E 's/ ---\.\.\./ : /g' \
+        | sed -E 's/ -\.-\.-\. / \; /g' \
+        | sed -E 's/ -\.\.\.- / = /g' \
+        | sed -E 's/ \.\.--\.- / _ /g' \
+        | sed -E 's/ \.-\.\.-\. / " /g' \
+        | sed -E 's/ \.\.\.-\.\.- / \$ /g' \
+        | sed -E 's/ \.--\.-\. / @ /g' \
+        | sed -E 's/ \.- / A /g' \
+        | sed -E 's/ -\.\.\. / B /g' \
+        | sed -E 's/ -\.-\. / C /g' \
+        | sed -E 's/ -\.\. / D /g' \
+        | sed -E 's/ \. / E /g' \
+        | sed -E 's/ \.\.-\. / F /g' \
+        | sed -E 's/ --\. / G /g' \
+        | sed -E 's/ \.\.\.\. / H /g' \
+        | sed -E 's/ \.\. / I /g' \
+        | sed -E 's/ \.--- / J /g' \
+        | sed -E 's/ -\.- / K /g' \
+        | sed -E 's/ \.-\.\. / L /g' \
+        | sed -E 's/ -- / M /g' \
+        | sed -E 's/ -\. / N /g' \
+        | sed -E 's/ --- / O /g' \
+        | sed -E 's/ \.--\. / P /g' \
+        | sed -E 's/ --\.- / Q /g' \
+        | sed -E 's/ \.-\. / R /g' \
+        | sed -E 's/ \.\.\. / S /g' \
+        | sed -E 's/ - / T /g' \
+        | sed -E 's/ \.\.- / U /g' \
+        | sed -E 's/ \.\.\.- / V /g' \
+        | sed -E 's/ \.-- / W /g' \
+        | sed -E 's/ -\.\.- / X /g' \
+        | sed -E 's/ -\.-- / Y /g' \
+        | sed -E 's/ --\.\. / Z /g' \
+        | sed -E 's/ \.---- / 1 /g' \
+        | sed -E 's/ \.\.--- / 2 /g' \
+        | sed -E 's/ \.\.\.-- / 3 /g' \
+        | sed -E 's/ \.\.\.\.- / 4 /g' \
+        | sed -E 's/ \.\.\.\.\. / 5 /g' \
+        | sed -E 's/ -\.\.\.\. / 6 /g' \
+        | sed -E 's/ --\.\.\. / 7 /g' \
+        | sed -E 's/ ---\.\. / 8 /g' \
+        | sed -E 's/ ----\. / 9 /g' \
+        | sed -E 's/ ----- / 0 /g' \
+        | sed -E 's/ -\.\.-\. / \&slash; /g' \
+        | sed -E 's/ \.-\.-\.- / . /g' \
+        | sed -E 's/ -\.\.\.\.- / - /g' \
+        | sed -E 's/ //g' \
+        | sed -E 's/\// /g' \
+        | sed -E 's/&slash;/\//g'
+}
+
 main() {
     check_var "$@"
     set_var "$@"
     set_command
 
-    local list=(b32 b32de b64 b64de hex xhex hexde url urlde uni unide html htmlde)
+    local list=(b32 b32de b64 b64de hex xhex hexde url urlde uni unide html htmlde morse morsede)
     local str="$_INPUT_STR"
 
     for i in "${_ENCODE_LIST[@]}"; do
