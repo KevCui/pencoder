@@ -122,3 +122,7 @@ WlVoc05nPT0=
 ~$ echo "super mario" | xargs -0 ./pencoder.sh url b64 hex
 633356775a58496c4d6a427459584a7062773d3d
 ```
+
+---
+
+<a href="https://www.buymeacoffee.com/kevcui" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-orange.png" alt="Buy Me A Coffee" height="60px" width="217px"></a>
