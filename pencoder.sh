@@ -116,6 +116,7 @@ f_url() {
     local strlen=${#string}
     local encoded pos c o
 
+    encoded=""
     for (( pos=0 ; pos<strlen ; pos++ )); do
         c=${string:$pos:1}
         case "$c" in
