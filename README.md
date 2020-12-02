@@ -85,7 +85,7 @@ $ ./pencoder.sh morse sos
 ... --- ...
 ```
 
-````bash
+```bash
 $ ./pencoder.sh bin Xmas
 01011000 01101101 01100001 01110011
 ```
@@ -95,7 +95,7 @@ $ ./pencoder.sh bin Xmas
 ```bash
 $ ./pencoder.sh b64de 'dGhpcyBpcyBhIHRlc3Q='
 this is a test
-````
+```
 
 ```bash
 $ ./pencoder.sh morsede '... --- ...'
@@ -103,8 +103,8 @@ SOS
 ```
 
 ````bash
-$ ./pencoder.sh binde '01011000 01101101 01100001 01110011'
-Xmas
+$ ./pencoder.sh binde '01001101 01100001 01110100 01110100 01100101 00100000 01000010 01101100 01100001 01100011 01101011 00100000 01000101 01110110 01100101 01110010 01111001 01110100 01101000 01101001 01101110 01100111 00101110'
+Matte Black Everything.
 ```
 
 ### Encoding with multiple encoders
