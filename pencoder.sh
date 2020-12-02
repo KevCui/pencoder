@@ -11,6 +11,8 @@
 #/                    \033[32mb32de\033[0m:   base32 decode
 #/                    \033[32mb64\033[0m:     base64 encode
 #/                    \033[32mb64de\033[0m:   base64 decode
+#/                    \033[32mbin\033[0m:     8-bit binary encode
+#/                    \033[32mbinde\033[0m:   8-bit binary decode
 #/                    \033[32mhex\033[0m:     hex encode
 #/                    \033[32mxhex\033[0m:    hex encode using \\x delimiter
 #/                    \033[32mhexde\033[0m:   hex decode
@@ -485,12 +487,33 @@ f_morsede() {
         | sed -E 's/&slash;/\//g'
 }
 
+f_bin() {
+    local o
+    for (( i=0; i<${#1}; i++ )); do
+        o+=" $(echo -n "${1:$i:1}" | $_XXD -b | awk '{print $2}')"
+    done
+    sed -E 's/^\s//' <<< "$o"
+}
+
+f_binde() {
+    for bin in $1; do
+        printf \\$(echo "obase=8; ibase=2; $bin" | bc) | tr -d '\n'
+    done
+}
+
 main() {
     check_var "$@"
     set_var "$@"
     set_command
 
-    local list=(b32 b32de b64 b64de hex xhex hexde url urlde uni unide html htmlde morse morsede)
+    local list=(b32 b32de \
+                b64 b64de \
+                hex xhex hexde \
+                url urlde \
+                uni unide \
+                html htmlde \
+                morse morsede \
+                bin binde)
     local str="$_INPUT_STR"
 
     for i in "${_ENCODE_LIST[@]}"; do

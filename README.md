@@ -33,6 +33,7 @@
 - Unicode encode using \u delimiter /decode
 - HTML encode/decode
 - Morse encode/decode
+- 8-bit binary encode/decode
 
 ## Download
 
@@ -53,6 +54,8 @@ Options:
                    b32de:   base32 decode
                    b64:     base64 encode
                    b64de:   base64 decode
+                   bin:     8-bit binary encode
+                   binde:   8-bit binary decode
                    hex:     hex encode
                    xhex:    hex encode using \x delimiter
                    hexde:   hex decode
