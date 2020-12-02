@@ -38,8 +38,8 @@
 ## Download
 
 ```bash
-~$ wget https://raw.githubusercontent.com/KevCui/pencoder/master/pencoder.sh
-~$ chmod +x pencoder.sh
+$ wget https://raw.githubusercontent.com/KevCui/pencoder/master/pencoder.sh
+$ chmod +x pencoder.sh
 ```
 
 ## Usage
@@ -76,55 +76,66 @@ Options:
 ### Encoding with one encoder
 
 ```bash
-~$ ./pencoder.sh b64 'this is a test'
+$ ./pencoder.sh b64 'this is a test'
 dGhpcyBpcyBhIHRlc3Q=
 ```
 
 ```bash
-~$ ./pencoder.sh morse sos
+$ ./pencoder.sh morse sos
 ... --- ...
+```
+
+````bash
+$ ./pencoder.sh bin Xmas
+01011000 01101101 01100001 01110011
 ```
 
 ### Decoding with one decoder
 
 ```bash
-~$ ./pencoder.sh b64de 'dGhpcyBpcyBhIHRlc3Q='
+$ ./pencoder.sh b64de 'dGhpcyBpcyBhIHRlc3Q='
 this is a test
-```
+````
 
 ```bash
-~$ ./pencoder.sh morsede '... --- ...'
+$ ./pencoder.sh morsede '... --- ...'
 SOS
+```
+
+````bash
+$ ./pencoder.sh binde '01011000 01101101 01100001 01110011'
+Xmas
 ```
 
 ### Encoding with multiple encoders
 
 ```bash
-~$ ./pencoder.sh url b64 hex 'crazy encoding'
+$ ./pencoder.sh url b64 hex 'crazy encoding'
 59334a68656e6b6c4d6a426c626d4e765a476c755a773d3d
 ```
 
 ### Decoding with multiple decoders
 
 ```bash
-~$ ./pencoder.sh hexde b64de urlde '59334a68656e6b6c4d6a426c626d4e765a476c755a773d3d'
+$ ./pencoder.sh hexde b64de urlde '59334a68656e6b6c4d6a426c626d4e765a476c755a773d3d'
 crazy encoding
 ```
 
 ### Running the same encoder multiple times
 
 ```bash
-~$ ./pencoder.sh b64 b64 b64 'xyz'
+$ ./pencoder.sh b64 b64 b64 'xyz'
 WlVoc05nPT0=
 ```
 
 ### Working with pipe
 
 ```bash
-~$ echo "super mario" | xargs -0 ./pencoder.sh url b64 hex
+$ echo "super mario" | xargs -0 ./pencoder.sh url b64 hex
 633356775a58496c4d6a427459584a7062773d3d
 ```
 
 ---
 
 <a href="https://www.buymeacoffee.com/kevcui" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-orange.png" alt="Buy Me A Coffee" height="60px" width="217px"></a>
+````
