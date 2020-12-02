@@ -65,7 +65,6 @@ Options:
                    morse:   Morse encode
                    morsede: Morse decode
                    support multiple encoders: encoder1 encoder2...
-                   support multiple encoders: encoder1 encoder2...
   -h | --help      display this help message
 ```
 

@@ -23,7 +23,6 @@
 #/                    \033[32mmorse\033[0m:   Morse encode
 #/                    \033[32mmorsede\033[0m: Morse decode
 #/                    support multiple encoders: encoder1 encoder2...
-#/                    support multiple encoders: encoder1 encoder2...
 #/   -h | --help      display this help message
 
 set -e
