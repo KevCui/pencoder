@@ -22,6 +22,7 @@
 #/                    \033[32munide\033[0m:   Unicode decode
 #/                    \033[32mhtml\033[0m:    HTML encode
 #/                    \033[32mhtmlde\033[0m:  HTML decode
+#/                    \033[32mjwtde\033[0m:   JWT decode
 #/                    \033[32mmorse\033[0m:   Morse encode
 #/                    \033[32mmorsede\033[0m: Morse decode
 #/                    \033[32mrot13\033[0m:   Rot13 encode
@@ -511,6 +512,41 @@ f_rot13de() {
     f_rot13 "$1"
 }
 
+padding() {
+    # $1: base64 string
+    local m p=""
+    m=$(( ${#1} % 4 ))
+    [[ "$m" == 2 ]] && p="=="
+    [[ "$m" == 3 ]] && p="="
+    echo "${1}${p}"
+}
+
+f_jwtde() {
+    local in
+    in=("$1")
+    in=("${in//$'\n'/}")
+    in=("${in//' '/}")
+    token=$(IFS=$'\n'; echo "${in[*]}")
+
+    IFS='.' read -ra ADDR <<< "$token"
+
+    echo -e "\nHEADER:"
+    if [[ -z $(command -v python) ]]; then
+        base64 -d <<< "$(padding "${ADDR[0]}")" && echo ""
+    else
+        base64 -d <<< "$(padding "${ADDR[0]}")" | python -m json.tool
+    fi
+
+    echo -e "\nPAYLOAD:"
+    if [[ -z $(command -v python) ]]; then
+        base64 -d <<< "$(padding "${ADDR[1]}")" && echo ""
+    else
+        base64 -d <<< "$(padding "${ADDR[1]}")" | python -m json.tool
+    fi
+
+    echo -e "\nSIGNATURE:\n${ADDR[2]}"
+}
+
 main() {
     check_var "$@"
     set_var "$@"
@@ -518,13 +554,14 @@ main() {
 
     local list=(b32 b32de \
                 b64 b64de \
+                bin binde \
                 hex xhex hexde \
                 url urlde \
                 uni unide \
                 html htmlde \
                 morse morsede \
                 rot13 rot13de \
-                bin binde)
+                jwtde)
     local str="$_INPUT_STR"
 
     for i in "${_ENCODE_LIST[@]}"; do

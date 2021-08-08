@@ -35,6 +35,7 @@
 - Morse encode/decode
 - 8-bit binary encode/decode
 - Rot13 encode/decode
+- JWT decode
 
 ## Download
 
@@ -66,6 +67,7 @@ Options:
                    unide:   Unicode decode
                    html:    HTML encode
                    htmlde:  HTML decode
+                   jwtde:   JWT decode
                    morse:   Morse encode
                    morsede: Morse decode
                    rot13:   Rot13 encode
