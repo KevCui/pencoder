@@ -24,6 +24,8 @@
 #/                    \033[32mhtmlde\033[0m:  HTML decode
 #/                    \033[32mmorse\033[0m:   Morse encode
 #/                    \033[32mmorsede\033[0m: Morse decode
+#/                    \033[32mrot13\033[0m:   Rot13 encode
+#/                    \033[32mrot13de\033[0m: Rot13 decode
 #/                    support multiple encoders: encoder1 encoder2...
 #/   -h | --help      display this help message
 
@@ -501,6 +503,14 @@ f_binde() {
     done
 }
 
+f_rot13() {
+    echo -n "$1" | tr 'A-Za-z' 'N-ZA-Mn-za-m'
+}
+
+f_rot13de() {
+    f_rot13 "$1"
+}
+
 main() {
     check_var "$@"
     set_var "$@"
@@ -513,6 +523,7 @@ main() {
                 uni unide \
                 html htmlde \
                 morse morsede \
+                rot13 rot13de \
                 bin binde)
     local str="$_INPUT_STR"
 

@@ -34,6 +34,7 @@
 - HTML encode/decode
 - Morse encode/decode
 - 8-bit binary encode/decode
+- Rot13 encode/decode
 
 ## Download
 
@@ -67,6 +68,8 @@ Options:
                    htmlde:  HTML decode
                    morse:   Morse encode
                    morsede: Morse decode
+                   rot13:   Rot13 encode
+                   rot13de: Rot13 decode
                    support multiple encoders: encoder1 encoder2...
   -h | --help      display this help message
 ```
@@ -138,4 +141,3 @@ $ echo "super mario" | xargs -0 ./pencoder.sh url b64 hex
 ---
 
 <a href="https://www.buymeacoffee.com/kevcui" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-orange.png" alt="Buy Me A Coffee" height="60px" width="217px"></a>
-````
