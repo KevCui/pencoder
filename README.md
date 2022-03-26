@@ -35,6 +35,7 @@
 - Morse encode/decode
 - 8-bit binary encode/decode
 - Rot13 encode/decode
+- Rot47 encode/decode
 - JWT decode
 
 ## Download
@@ -72,6 +73,8 @@ Options:
                    morsede: Morse decode
                    rot13:   Rot13 encode
                    rot13de: Rot13 decode
+                   rot47:   Rot47 encode
+                   rot47de: Rot47 decode
                    support multiple encoders: encoder1 encoder2...
   -h | --help      display this help message
 ```

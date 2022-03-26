@@ -27,6 +27,8 @@
 #/                    \033[32mmorsede\033[0m: Morse decode
 #/                    \033[32mrot13\033[0m:   Rot13 encode
 #/                    \033[32mrot13de\033[0m: Rot13 decode
+#/                    \033[32mrot47\033[0m:   Rot47 encode
+#/                    \033[32mrot47de\033[0m: Rot47 decode
 #/                    support multiple encoders: encoder1 encoder2...
 #/   -h | --help      display this help message
 
@@ -512,6 +514,14 @@ f_rot13de() {
     f_rot13 "$1"
 }
 
+f_rot47() {
+    echo -n "$1" | tr '\!-~' 'P-~\!-O'
+}
+
+f_rot47de() {
+    f_rot47 "$1"
+}
+
 padding() {
     # $1: base64 string
     local m p=""
@@ -561,6 +571,7 @@ main() {
                 html htmlde \
                 morse morsede \
                 rot13 rot13de \
+                rot47 rot47de \
                 jwtde)
     local str="$_INPUT_STR"
 
